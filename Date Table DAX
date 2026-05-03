@@ -1,0 +1,48 @@
+DateTable =
+VAR MinYear = 2015
+VAR MaxYear = YEAR(TODAY()) + 5
+RETURN
+ADDCOLUMNS (
+    CALENDAR ( DATE ( MinYear, 1, 1 ), DATE ( MaxYear, 12, 31 ) ),
+
+     "Year", YEAR ( [Date] ),
+    "Month Number", MONTH ( [Date] ),
+    "Day", DAY ( [Date] ),
+    "YearMonth", FORMAT ( [Date], "YYYY-MM" ),
+    "YearMonthNum", YEAR ( [Date] ) * 100 + MONTH ( [Date] ),
+
+    // Month_Names
+    "Month Name", FORMAT ( [Date], "MMMM" ),
+    "Month Short", FORMAT ( [Date], "MMM" ),
+
+    // Quarter
+    "Quarter", "Q" & FORMAT ( [Date], "Q" ),
+    "YearQuarter", FORMAT ( [Date], "YYYY" ) & "-Q" & FORMAT ( [Date], "Q" ),
+
+    // Week
+    "Week Number", WEEKNUM ( [Date], 2 ),
+    "ISO Week", WEEKNUM ( [Date], 21 ),
+
+    // Day of Week
+    "Day of Week Number", WEEKDAY ( [Date], 2 ),
+    "Day Name", FORMAT ( [Date], "dddd" ),
+    "Day Short", FORMAT ( [Date], "ddd" ),
+
+    // Flags
+    "Is Weekend", IF ( WEEKDAY ( [Date], 2 ) > 5, TRUE (), FALSE () ),
+    "Is Today", [Date] = TODAY (),
+    "Is Past", [Date] < TODAY (),
+    "Is Future", [Date] > TODAY (),
+
+    // Relative Time
+    "Days From Today", DATEDIFF ( TODAY (), [Date], DAY ),
+    "Months From Today", DATEDIFF ( TODAY (), [Date], MONTH ),
+    "Years From Today", DATEDIFF ( TODAY (), [Date], YEAR ),
+
+
+    // Start / End
+    "Start of Month", EOMONTH ( [Date], -1 ) + 1,
+    "End of Month", EOMONTH ( [Date], 0 ),
+    "Start of Year", DATE ( YEAR ( [Date] ), 1, 1 ),
+    "End of Year", DATE ( YEAR ( [Date] ), 12, 31 )
+) 
